@@ -1,0 +1,131 @@
+#include<Servo.h>
+Servo RF,LF,LT,RT;
+float dis;
+const int trigPin = 11;
+const int echoPin = 10;
+float duration, distance;
+void setup()
+{
+  RF.attach(3);
+  RT.attach(5);
+  LF.attach(6);
+  LT.attach(9);
+  RF.write(180);
+  RT.write(0);
+  LF.write(90);
+  LT.write(80);
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+Serial.begin(9600); // Starts the serial 
+}
+float ultra()
+{
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin, HIGH);
+// Calculating the distance
+duration=duration/1000000;
+distance= (duration*100*340)/2;
+// Prints the distance on the Serial Monitor
+Serial.print("Distance: ");
+Serial.println(distance);
+return distance;
+}
+
+void loop()
+{ dis=ultra();
+  if(dis<=3)
+  {
+//FOR LEFT FOOT
+LF.write(90);
+delay(500);
+LF.write(100);
+delay(500);
+LF.write(110);
+delay(500);
+LF.write(120);
+delay(1000);
+
+RF.write(180);
+delay(500);
+RF.write(160);
+delay(500);
+RF.write(150);
+delay(1000);
+
+LT.write(80);
+delay(500);
+LT.write(70);
+delay(500);
+LT.write(50);
+delay(1000);
+
+RF.write(150);
+delay(500);
+RF.write(160);
+delay(500);
+RF.write(170);
+delay(500);
+RF.write(180);
+delay(1000);
+
+LF.write(120);
+delay(500);
+LF.write(110);
+delay(500);
+LF.write(100);
+delay(500);
+LF.write(90);
+delay(1000);
+
+//FOR RIGHT FOOT
+
+RF.write(180);
+delay(500);
+RF.write(170);
+delay(500);
+RF.write(160);
+delay(500);
+RF.write(150);
+delay(1000);
+
+LF.write(90);
+delay(500);
+LF.write(100);
+delay(500);
+LF.write(110);
+delay(1000);
+
+RT.write(0);
+delay(500);
+RT.write(10);
+delay(1000);
+
+LF.write(110);
+delay(500);
+LF.write(100);
+delay(500);
+LF.write(90);
+delay(1000);
+
+RF.write(150);
+delay(500);
+RF.write(160);
+delay(500);
+RF.write(170);
+delay(500);
+RF.write(180);
+delay(1000);}
+else
+{
+ RF.write(180);
+  RT.write(0);
+  LF.write(90);
+  LT.write(80);
+}
+}
